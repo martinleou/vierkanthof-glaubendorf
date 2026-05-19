@@ -63,61 +63,79 @@ const highlights = [
   },
 ];
 
-// High-quality curated images (Unsplash – optimized for speed & beauty)
+// Real photos provided by the user – optimized local images from public/images
 const galleryImages = [
   { 
     id: 1, 
-    url: "https://images.unsplash.com/photo-1600585154340-be6161a56b0a?w=1600&q=85", 
-    alt: "Vierkanthof Außenansicht mit Innenhof", 
-    caption: "Der historische Vierkanthof mit geschütztem Innenhof" 
+    url: "/images/gallery-1.jpg", 
+    alt: "Historischer Vierkanthof mit geschütztem Innenhof und alter Kastanie in Glaubendorf", 
+    caption: "Historischer Vierkanthof mit geschütztem Innenhof und alter Kastanie" 
   },
   { 
     id: 2, 
-    url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=85", 
-    alt: "Historischer Innenhof mit Naturstein", 
-    caption: "Idyllischer Innenhof mit alter Kastanie" 
-  },
-  { 
-    id: 3, 
-    url: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1600&q=85", 
-    alt: "Wohnbereich mit offenem Kamin", 
+    url: "/images/gallery-2.jpg", 
+    alt: "Wohnzimmer mit großem offenem Kamin im renovierten historischen Vierkanthof", 
     caption: "Wohnzimmer mit großem offenem Kamin" 
   },
   { 
-    id: 4, 
-    url: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1600&q=85", 
-    alt: "Natursteingewölbe im Inneren", 
-    caption: "Beeindruckende historische Natursteingewölbe" 
-  },
-  { 
-    id: 5, 
-    url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600&q=85", 
-    alt: "Schlafzimmer im Landhausstil", 
-    caption: "Eines der vier geräumigen Schlafzimmer" 
-  },
-  { 
-    id: 6, 
-    url: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=85", 
-    alt: "Moderne Küche im historischen Rahmen", 
-    caption: "Hochwertige Küche in historischem Ambiente" 
-  },
-  { 
-    id: 7, 
-    url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1600&q=85", 
-    alt: "Privater Pool im Grünen", 
+    id: 3, 
+    url: "/images/gallery-3.jpg", 
+    alt: "Privater Pool mit sonniger Liegewiese im idyllischen Garten des Anwesens", 
     caption: "Privater Pool mit sonniger Liegewiese" 
   },
   { 
+    id: 4, 
+    url: "/images/gallery-4.jpg", 
+    alt: "Hochwertige Küche in historischem Ambiente des renovierten Vierkanthofs", 
+    caption: "Hochwertige Küche in historischem Ambiente" 
+  },
+  { 
+    id: 5, 
+    url: "/images/gallery-5.jpg", 
+    alt: "Helles Wohnzimmer mit großzügigen Fensterfronten und sichtbaren Holzelementen", 
+    caption: "Helles Wohnzimmer mit großzügigen Fensterfronten und sichtbaren Holzelementen" 
+  },
+  { 
+    id: 6, 
+    url: "/images/gallery-6.jpg", 
+    alt: "Masterbedroom mit beeindruckendem historischen Natursteingewölbe", 
+    caption: "Masterbedroom mit beeindruckendem historischen Natursteingewölbe" 
+  },
+  { 
+    id: 7, 
+    url: "/images/gallery-7.jpg", 
+    alt: "Elegantes Bad en Suite mit freistehender Badewanne im historischen Ambiente", 
+    caption: "Elegantes Bad en Suite mit freistehender Badewanne" 
+  },
+  { 
     id: 8, 
-    url: "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=1600&q=85", 
-    alt: "Große historische Scheune", 
-    caption: "Die großzügige Scheune mit vielseitigen Nutzungsmöglichkeiten" 
+    url: "/images/gallery-8.jpg", 
+    alt: "Zweites von drei geräumigen Schlafzimmern im Vierkanthof", 
+    caption: "Zweites von 3 geräumigen Schlafzimmern" 
   },
   { 
     id: 9, 
-    url: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1600&q=85", 
-    alt: "Weinviertel Landschaft bei Sonnenuntergang", 
-    caption: "Die sanfte Hügellandschaft des Weinviertels" 
+    url: "/images/gallery-9.jpg", 
+    alt: "Atelier und separates Gästehaus des renovierten historischen Anwesens", 
+    caption: "Atelier und separates Gästehaus" 
+  },
+  { 
+    id: 10, 
+    url: "/images/gallery-10.jpg", 
+    alt: "Wohnzimmer des Gästehauses direkt am Pool mit elegantem Interieur", 
+    caption: "Wohnzimmer des Gästehauses am Pool" 
+  },
+  { 
+    id: 11, 
+    url: "/images/gallery-11.jpg", 
+    alt: "Badezimmer des Gästehauses mit stilvoller Ausstattung", 
+    caption: "Badezimmer des Gästehauses" 
+  },
+  { 
+    id: 12, 
+    url: "/images/gallery-12.jpg", 
+    alt: "Großzügige Scheune mit vielseitigen Nutzungsmöglichkeiten auf dem Anwesen", 
+    caption: "Großzügige Scheune mit vielseitigen Nutzungsmöglichkeiten" 
   },
 ];
 
@@ -229,11 +247,11 @@ export default function VierkanthofGlaubendorf() {
 
       {/* HERO SECTION */}
       <section className="relative h-[100dvh] min-h-[680px] flex items-center justify-center pt-20 overflow-hidden">
-        {/* Hero Background Image */}
+        {/* Hero Background Image - using real photo */}
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: `url('https://images.unsplash.com/photo-1600585154340-be6161a56b0a?w=2000&q=85')` 
+            backgroundImage: `url('/images/hero.jpg')` 
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" />
