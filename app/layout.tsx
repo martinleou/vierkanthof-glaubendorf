@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://vierkanthof-glaubendorf.at'),
   title: "Vierkanthof Glaubendorf | Renovierter historischer Vierkanthof im Weinviertel",
   description: "Einmalige Gelegenheit: Renovierter historischer Vierkanthof mit Pool, 240 m² Wohnfläche und 4.375 m² Grundstück in Glaubendorf, nur 40 Minuten von Wien. € 1.290.000.",
-  keywords: ["Vierkanthof", "Glaubendorf", "Weinviertel", "Immobilie", "Luxusimmobilie", "Pool", "Historisches Gebäude", "Österreich", "Wien Umland", "Lukas Heim"],
-  authors: [{ name: "Lukas Heim" }],
+  keywords: ["Vierkanthof", "Glaubendorf", "Weinviertel", "Immobilie", "Luxusimmobilie", "Pool", "Historisches Gebäude", "Österreich", "Wien Umland", "Leo Uvizl"],
+  authors: [{ name: "Leo Uvizl" }],
   openGraph: {
     title: "Vierkanthof Glaubendorf | Einmalige Gelegenheit im Weinviertel",
     description: "Renovierter historischer Vierkanthof mit 240 m², Pool und großer Scheune. Nur 40 Minuten von Wien. € 1.290.000.",

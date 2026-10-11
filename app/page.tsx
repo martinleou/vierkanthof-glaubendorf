@@ -513,17 +513,16 @@ export default function VierkanthofGlaubendorf() {
           <div className="lg:col-span-2 flex flex-col justify-between py-2">
             <div>
               <div className="text-sm text-[#9C5C3B] tracking-widest mb-3">IHRE ANSPRECHPERSON</div>
-              <div className="text-4xl tracking-tight font-medium mb-1">Lukas Heim</div>
-              <div className="text-[#8A7F75]">Immobilienberater • Weinviertel</div>
+              <div className="text-4xl tracking-tight font-medium mb-1">Leo Uvizl</div>
 
               <div className="mt-10 space-y-6 text-lg">
-                <a href="tel:+436769308040" className="flex items-center gap-4 group">
+                <a href="tel:+436643000876" className="flex items-center gap-4 group">
                   <div className="text-[#9C5C3B]"><Phone className="w-5 h-5" /></div>
-                  <span className="group-hover:text-[#9C5C3B] transition">+43 676 930 80 40</span>
+                  <span className="group-hover:text-[#9C5C3B] transition">+43 664 300 0876</span>
                 </a>
-                <a href="mailto:lukas.heim@vierkanthof-glaubendorf.at" className="flex items-center gap-4 group">
+                <a href="mailto:uvizleo@msn.com" className="flex items-center gap-4 group">
                   <div className="text-[#9C5C3B]"><Mail className="w-5 h-5" /></div>
-                  <span className="group-hover:text-[#9C5C3B] transition">lukas.heim@vierkanthof-glaubendorf.at</span>
+                  <span className="group-hover:text-[#9C5C3B] transition">uvizleo@msn.com</span>
                 </a>
               </div>
             </div>
