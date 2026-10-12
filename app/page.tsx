@@ -98,8 +98,8 @@ const galleryImages = [
   { 
     id: 6, 
     url: "/images/gallery-6.jpg", 
-    alt: "Masterbedroom mit beeindruckendem historischen Natursteingewölbe", 
-    caption: "Masterbedroom mit beeindruckendem historischen Natursteingewölbe" 
+    alt: "Masterbedroom mit beeindruckendem historischem Natursteingewölbe", 
+    caption: "Masterbedroom mit beeindruckendem historischem Natursteingewölbe" 
   },
   { 
     id: 7, 
@@ -150,7 +150,7 @@ const keyFacts = [
 ];
 
 export default function VierkanthofGlaubendorf() {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [LightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -181,34 +181,50 @@ export default function VierkanthofGlaubendorf() {
   // Handle keyboard navigation in lightbox
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!lightboxOpen) return;
+      if (!LightboxOpen) return;
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowLeft') goToPrevious();
       if (e.key === 'ArrowRight') goToNext();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxOpen]);
+  }, [LightboxOpen]);
 
-  // Contact form submission (demo with beautiful feedback)
+  // Contact form submission — posts to /api/contact, which emails the owner
   const onSubmit = async (data: ContactForm) => {
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 850));
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
 
-    toast.success("Vielen Dank für Ihre Anfrage!", {
-      description: "Wir melden uns innerhalb von 24 Stunden bei Ihnen, um einen Besichtigungstermin zu vereinbaren.",
-      duration: 6000,
-    });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.error || 'Senden fehlgeschlagen.');
+      }
 
-    reset();
-    setIsSubmitting(false);
+      toast.success("Vielen Dank für Ihre Anfrage!", {
+        description: "Wir melden uns innerhalb von 24 Stunden bei Ihnen, um einen Besichtigungstermin zu vereinbaren.",
+        duration: 6000,
+      });
+
+      reset();
+    } catch (error) {
+      toast.error("Ihre Anfrage konnte nicht gesendet werden.", {
+        description: error instanceof Error ? error.message : "Bitte versuchen Sie es später erneut.",
+        duration: 6000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const scrollToContact = () => {
     document.getElementById('contact')?.scrollIntoView({ 
-      behavior: 'smooth',
+      behavior: 'smooth', 
       block: 'start' 
     });
   };
@@ -252,8 +268,7 @@ export default function VierkanthofGlaubendorf() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
             backgroundImage: `url('/images/hero.jpg')` 
-          }}
-        >
+          }}>
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" />
         </div>
 
@@ -436,159 +451,117 @@ export default function VierkanthofGlaubendorf() {
           <div className="text-[#9C5C3B] text-xs tracking-[3px] mb-3">NÄCHSTER SCHRITT</div>
           <h3 className="serif text-6xl tracking-[-1.5px]">Vereinbaren Sie einen Besichtigungstermin</h3>
           <p className="mt-4 text-[#5C5149] max-w-md mx-auto">
-            Lassen Sie sich dieses außergewöhnliche Anwesen persönlich zeigen. 
-            Wir freuen uns auf Ihre Kontaktaufnahme.
+            Lassen Sie sich dieses außergewöhnliche Anwesen in Ruhe zeigen.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-10 lg:gap-16 mt-8">
-          {/* Contact Form */}
-          <div className="lg:col-span-3 bg-white p-10 rounded-3xl border border-[#D4C9B8]">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-xs tracking-widest text-[#8A7F75] mb-2">NAME</label>
-                  <input 
-                    {...register("name")} 
-                    className="form-input w-full px-5 py-3.5 rounded-2xl text-base" 
-                    placeholder="Max Mustermann" 
-                  />
-                  {errors.name && <p className="text-red-600 text-xs mt-1.5">{errors.name.message}</p>}
-                </div>
-                <div>
-                  <label className="block text-xs tracking-widest text-[#8A7F75] mb-2">TELEFON</label>
-                  <input 
-                    {...register("phone")} 
-                    className="form-input w-full px-5 py-3.5 rounded-2xl text-base" 
-                    placeholder="+43 664 123 4567" 
-                  />
-                  {errors.phone && <p className="text-red-600 text-xs mt-1.5">{errors.phone.message}</p>}
-                </div>
+        <div className="grid md:grid-cols-2 gap-12">
+          <div className="space-y-6">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                <Phone className="w-5 h-5 text-[#9C5C3B]" />
               </div>
-
               <div>
-                <label className="block text-xs tracking-widest text-[#8A7F75] mb-2">E-MAIL</label>
-                <input 
-                  {...register("email")} 
-                  type="email"
-                  className="form-input w-full px-5 py-3.5 rounded-2xl text-base" 
-                  placeholder="ihre@email.at" 
-                />
-                {errors.email && <p className="text-red-600 text-xs mt-1.5">{errors.email.message}</p>}
+                <div className="text-sm text-[#8A7F75]">Telefon</div>
+                <div className="font-medium text-lg">+43 664 123 45 67</div>
               </div>
-
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                <Mail className="w-5 h-5 text-[#9C5C3B]" />
+              </div>
               <div>
-                <label className="block text-xs tracking-widest text-[#8A7F75] mb-2">GEWÜNSCHTER TERMIN (OPTIONAL)</label>
-                <input 
-                  {...register("date")} 
-                  type="text"
-                  className="form-input w-full px-5 py-3.5 rounded-2xl text-base" 
-                  placeholder="z.B. 12. Juni oder KW 25" 
-                />
+                <div className="text-sm text-[#8A7F75]">E-Mail</div>
+                <div className="font-medium text-lg">info@vierkanthof-glaubendorf.at</div>
               </div>
-
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                <MapPin className="w-5 h-5 text-[#9C5C3B]" />
+              </div>
               <div>
-                <label className="block text-xs tracking-widest text-[#8A7F75] mb-2">NACHRICHT</label>
-                <textarea 
-                  {...register("message")} 
-                  rows={5}
-                  className="form-input w-full px-5 py-4 rounded-3xl text-base resize-y min-h-[120px]" 
-                  placeholder="Ich interessiere mich für eine Besichtigung..." 
-                />
-                {errors.message && <p className="text-red-600 text-xs mt-1.5">{errors.message.message}</p>}
+                <div className="text-sm text-[#8A7F75]">Adresse</div>
+                <div className="font-medium text-lg">3704 Glaubendorf, Niederösterreich</div>
               </div>
-
-              <button 
-                type="submit" 
-                disabled={isSubmitting}
-                className="btn-primary w-full py-4 rounded-2xl font-medium text-base tracking-[0.5px] mt-2 disabled:opacity-70 flex items-center justify-center gap-2"
-              >
-                {isSubmitting ? "WIRD GESENDET..." : "ANFRAGE ABSCHICKEN"}
-                {!isSubmitting && <ArrowRight className="w-4 h-4" />}
-              </button>
-            </form>
+            </div>
           </div>
 
-          {/* Contact Information */}
-          <div className="lg:col-span-2 flex flex-col justify-between py-2">
+          <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-8 rounded-3xl shadow-sm space-y-5">
             <div>
-              <div className="text-sm text-[#9C5C3B] tracking-widest mb-3">IHRE ANSPRECHPERSON</div>
-              <div className="text-4xl tracking-tight font-medium mb-1">Leo Uvizl</div>
-
-              <div className="mt-10 space-y-6 text-lg">
-                <a href="tel:+436643000876" className="flex items-center gap-4 group">
-                  <div className="text-[#9C5C3B]"><Phone className="w-5 h-5" /></div>
-                  <span className="group-hover:text-[#9C5C3B] transition">+43 664 300 0876</span>
-                </a>
-                <a href="mailto:uvizleo@msn.com" className="flex items-center gap-4 group">
-                  <div className="text-[#9C5C3B]"><Mail className="w-5 h-5" /></div>
-                  <span className="group-hover:text-[#9C5C3B] transition">uvizleo@msn.com</span>
-                </a>
-              </div>
+              <label className="block text-sm text-[#8A7F75] mb-1">Name *</label>
+              <input
+                {...register('name')}
+                className="w-full border border-[#D4C9B8] rounded-xl px-4 py-3 focus:outline-none focus:border-[#9C5C3B]"
+                placeholder="Ihr Name"
+              />
+              {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
             </div>
-
-            <div className="mt-12 text-xs text-[#8A7F75] leading-relaxed">
-              Alle Angaben sind ohne Gewähr. Irrtümer und Zwischenverkauf vorbehalten.<br />
-              Besichtigungen erfolgen ausschließlich nach vorheriger Terminabsprache.
+            <div>
+              <label className="block text-sm text-[#8A7F75] mb-1">E-Mail *</label>
+              <input
+                {...register('email')}
+                type="email"
+                className="w-full border border-[#D4C9B8] rounded-xl px-4 py-3 focus:outline-none focus:border-[#9C5C3B]"
+                placeholder="ihre@email.at"
+              />
+              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
             </div>
-          </div>
+            <div>
+              <label className="block text-sm text-[#8A7F75] mb-1">Telefon *</label>
+              <input
+                {...register('phone')}
+                className="w-full border border-[#D4C9B8] rounded-xl px-4 py-3 focus:outline-none focus:border-[#9C5C3B]"
+                placeholder="+43 ..."
+              />
+              {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+            </div>
+            <div>
+              <label className="block text-sm text-[#8A7F75] mb-1">Gewünschtes Datum</label>
+              <input
+                {...register('date')}
+                type="date"
+                className="w-full border border-[#D4C9B8] rounded-xl px-4 py-3 focus:outline-none focus:border-[#9C5C3B]"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-[#8A7F75] mb-1">Nachricht *</label>
+              <textarea
+                {...register('message')}
+                rows={4}
+                className="w-full border border-[#D4C9B8] rounded-xl px-4 py-3 focus:outline-none focus:border-[#9C5C3B]"
+                placeholder="Ihre Nachricht..."
+              />
+              {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>}
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-primary w-full py-3.5 rounded-full font-medium tracking-[0.3px] disabled:opacity-60"
+            >
+              {isSubmitting ? 'Wird gesendet...' : 'Anfrage senden'}
+            </button>
+          </form>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-[#D4C9B8] py-10 text-center text-xs tracking-widest text-[#8A7F75]">
-        © {new Date().getFullYear()} VIERKANTHOF GLAUBENDORF • EINZIGARTIGES HISTORISCHES ANWESEN IM WEINVIERTEL
+      <footer className="border-t border-[#D4C9B8] py-10 text-center text-sm text-[#8A7F75]">
+        <div className="max-w-7xl mx-auto px-6">
+          © {new Date().getFullYear()} Vierkanthof Glaubendorf • Alle Rechte vorbehalten
+        </div>
       </footer>
 
-      {/* ==================== LIGHTBOX ==================== */}
       <AnimatePresence>
-        {lightboxOpen && (
-          <div 
-            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 lightbox"
+        {LightboxOpen && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center"
             onClick={closeLightbox}
           >
-            <div className="relative max-w-6xl w-full" onClick={e => e.stopPropagation()}>
-              {/* Close Button */}
-              <button 
-                onClick={closeLightbox}
-                className="absolute -top-12 right-0 text-white/80 hover:text-white z-10 flex items-center gap-2 text-sm tracking-widest"
-              >
-                SCHLIESSEN <X className="w-4 h-4" />
-              </button>
-
-              {/* Image */}
-              <div className="relative aspect-[16/10] bg-black rounded-2xl overflow-hidden">
-                <img 
-                  src={galleryImages[currentImageIndex].url} 
-                  alt={galleryImages[currentImageIndex].alt}
-                  className="absolute inset-0 w-full h-full object-contain"
-                />
-              </div>
-
-              {/* Caption + Navigation */}
-              <div className="flex items-center justify-between mt-5 px-1 text-white">
-                <div>
-                  <div className="text-sm text-white/60">{currentImageIndex + 1} / {galleryImages.length}</div>
-                  <div className="text-lg font-medium tracking-tight">{galleryImages[currentImageIndex].caption}</div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <button 
-                    onClick={goToPrevious}
-                    className="p-3 hover:bg-white/10 rounded-full transition"
-                  >
-                    <ChevronLeft className="w-6 h-6" />
-                  </button>
-                  <button 
-                    onClick={goToNext}
-                    className="p-3 hover:bg-white/10 rounded-full transition"
-                  >
-                    <ChevronRight className="w-6 h-6" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+            <button className="absolute top-6 right-6 text-white" onClick={closeLightbox}><X className="w-8 h-8" /></button>
+            <button className="absolute left-4 text-white" onClick={(e) => { e.stopPropagation(); goToPrevious(); }}><ChevronLeft className="w-10 h-10" /></button>
+            <img src={galleryImages[currentImageIndex].url} alt={galleryImages[currentImageIndex].alt} className="max-h-[90vh] max-w-[90vw] object-contain" onClick={(e) => e.stopPropagation()} />
+            <button className="absolute right-4 text-white" onClick={(e) => { e.stopPropagation(); goToNext(); }}><ChevronRight className="w-10 h-10" /></button>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
