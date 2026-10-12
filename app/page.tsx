@@ -457,24 +457,28 @@ export default function VierkanthofGlaubendorf() {
 
         <div className="grid md:grid-cols-2 gap-12">
           <div className="space-y-6">
-            <div className="flex items-start gap-4">
+            <div>
+              <div className="text-sm text-[#9C5C3B] tracking-widest mb-2">IHRE ANSPRECHPERSON</div>
+              <div className="text-4xl tracking-tight font-medium">Leo Uvizl</div>
+            </div>
+            <a href="tel:+436643000876" className="flex items-start gap-4 group">
               <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
                 <Phone className="w-5 h-5 text-[#9C5C3B]" />
               </div>
               <div>
                 <div className="text-sm text-[#8A7F75]">Telefon</div>
-                <div className="font-medium text-lg">+43 664 123 45 67</div>
+                <div className="font-medium text-lg group-hover:text-[#9C5C3B] transition-colors">+43 664 300 0876</div>
               </div>
-            </div>
-            <div className="flex items-start gap-4">
+            </a>
+            <a href="mailto:uvizleo@msn.com" className="flex items-start gap-4 group">
               <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
                 <Mail className="w-5 h-5 text-[#9C5C3B]" />
               </div>
               <div>
                 <div className="text-sm text-[#8A7F75]">E-Mail</div>
-                <div className="font-medium text-lg">info@vierkanthof-glaubendorf.at</div>
+                <div className="font-medium text-lg group-hover:text-[#9C5C3B] transition-colors">uvizleo@msn.com</div>
               </div>
-            </div>
+            </a>
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
                 <MapPin className="w-5 h-5 text-[#9C5C3B]" />
